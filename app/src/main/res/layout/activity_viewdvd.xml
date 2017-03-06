@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+
+
+    <TextView
+        android:text="Titre"
+        android:layout_width="135dp"
+        android:layout_height="41dp"
+        tools:layout_editor_absoluteY="59dp"
+        tools:layout_editor_absoluteX="8dp"
+        android:id="@+id/titreDVD"
+        tools:text="Titre de la formation" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        tools:layout_editor_absoluteY="108dp"
+        tools:layout_editor_absoluteX="8dp"
+        android:id="@+id/anneeDVD"
+        tools:text="année" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        tools:layout_editor_absoluteY="26dp"
+        tools:layout_editor_absoluteX="8dp"
+        android:id="@+id/resumeDVD"
+        tools:text="Titre" />
+
+    <TextView
+        android:text="formateur1"
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        tools:layout_editor_absoluteY="160dp"
+        tools:layout_editor_absoluteX="10dp"
+        android:id="@+id/formateur1"
+        tools:text="formateur 1" />
+
+    <TextView
+        android:text="formateur2"
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        tools:layout_editor_absoluteY="193dp"
+        tools:layout_editor_absoluteX="8dp"
+        android:id="@+id/formateur2"
+        tools:text="formateur 2" />
+</LinearLayout>

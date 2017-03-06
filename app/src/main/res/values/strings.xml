@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Eformation</string>
+    <string name="annee_de_sortie">Année de sortie : %d</string>
 </resources>
