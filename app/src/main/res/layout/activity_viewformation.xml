@@ -10,12 +10,12 @@
 
 
     <TextView
-        android:text="Titre"
+        android:text="Formation"
         android:layout_width="135dp"
         android:layout_height="41dp"
         tools:layout_editor_absoluteY="59dp"
         tools:layout_editor_absoluteX="8dp"
-        android:id="@+id/titreDVD"
+        android:id="@+id/titreFormation"
         tools:text="Titre de la formation" />
 
     <TextView
@@ -24,7 +24,7 @@
         android:layout_height="17dp"
         tools:layout_editor_absoluteY="108dp"
         tools:layout_editor_absoluteX="8dp"
-        android:id="@+id/anneeDVD"
+        android:id="@+id/anneeFormation"
         tools:text="année" />
 
     <TextView
@@ -33,7 +33,7 @@
         android:layout_height="17dp"
         tools:layout_editor_absoluteY="26dp"
         tools:layout_editor_absoluteX="8dp"
-        android:id="@+id/resumeDVD"
+        android:id="@+id/resumeFormation"
         tools:text="Titre" />
 
     <TextView

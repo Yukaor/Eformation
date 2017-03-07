@@ -21,12 +21,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/titre_du_film"
+            android:text="@string/titre_formation"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/addDVD_titre"
+            android:id="@+id/addformation_titre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -35,14 +35,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/annee_de_sortie_libelle"
-            android:inputType="number"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/addDVD_annee"
+            android:id="@+id/addformateur_annee"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
         <!-- Zone acteurs -->
         <LinearLayout
             android:layout_width="wrap_content"
@@ -52,12 +52,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/acteurs"
+                android:text="@string/formateurs"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/addDVD_addActeur"
+                android:id="@+id/addformateur_addformateur"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="+"
@@ -66,13 +66,13 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/addDVD_addActeurLayout"
+            android:id="@+id/addformation_addFormateurLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/addDVD_acteur1"
+                android:id="@+id/addFormateur_formateur1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp" />
@@ -86,7 +86,7 @@
             android:textStyle="normal|bold" />
 
         <EditText
-            android:id="@+id/addDVD_resume"
+            android:id="@+id/addFormateur_resume"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.68"
@@ -101,7 +101,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/addDVD_ok"
+                android:id="@+id/addFormateur_ok"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

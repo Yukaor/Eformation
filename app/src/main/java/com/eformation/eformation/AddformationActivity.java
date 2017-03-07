@@ -12,49 +12,49 @@ import android.widget.LinearLayout;
  * Created by Benjamin on 07/03/2017.
  */
 
-public class AddDVDActivty extends Activity {
-    EditText editTitreFilm;
+public class AddformationActivity extends Activity {
+    EditText editTitreFormation;
     EditText editAnnee;
     EditText editResume;
-    Button btnAddActeur;
+    Button btnAddFormateur;
     Button btnOk;
-    LinearLayout addActeurLayout;
+    LinearLayout addFormateurLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
         //Affection du fichier de layout
-        setContentView(R.layout.activity_adddvd);
+        setContentView(R.layout.activity_addformation);
 
         //Obtention des références sur les composants
-        editTitreFilm = (EditText)findViewById(R.id.addDVD_titre);
-        editAnnee = (EditText)findViewById(R.id.addDVD_annee);
-        editResume= (EditText)findViewById(R.id.addDVD_resume);
-        btnAddActeur = (Button)findViewById(R.id.addDVD_addActeur);
-        btnOk = (Button)findViewById(R.id.addDVD_ok);
-        addActeurLayout = (LinearLayout)findViewById(R.id.addDVD_addActeurLayout);
+        editTitreFormation = (EditText)findViewById(R.id.addformation_titre);
+        editAnnee = (EditText)findViewById(R.id.addformateur_annee);
+        editResume= (EditText)findViewById(R.id.addFormateur_resume);
+        btnAddFormateur = (Button)findViewById(R.id.addformateur_addformateur);
+        btnOk = (Button)findViewById(R.id.addFormateur_ok);
+        addFormateurLayout = (LinearLayout)findViewById(R.id.addformation_addFormateurLayout);
 
-        btnAddActeur.setOnClickListener(new View.OnClickListener()
+        btnAddFormateur.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                addActeur(null);
+                addFormateur(null);
             }
         });
 
         if(savedInstanceState != null)
         {
-            String[] acteurs = savedInstanceState.getStringArray("acteurs");
-            for(String s : acteurs)
+            String[] Formateurs = savedInstanceState.getStringArray("Formateurs");
+            for(String s : Formateurs)
             {
-                addActeur(s);
+                addFormateur(s);
             }
         }
         else {
             //Aucun acteur saisi, on affiche un composant editText vide
-            addActeur(null);
+            addFormateur(null);
         }
 
     }
@@ -89,16 +89,18 @@ public class AddDVDActivty extends Activity {
         super.onDestroy();
     }
 
-    private void addActeur(String content){
+    private void addFormateur(String content){
 
-        EditText editNewActeur = new EditText(this);
-        editNewActeur.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+        EditText editNewformateur = new EditText(this);
+        editNewformateur.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME
                 | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
 
         if(content != null)
         {
-            addActeurLayout.addView(editNewActeur);
+            editNewformateur.setText(content);
         }
+
+        addFormateurLayout.addView(editNewformateur);
 
 
     }
@@ -106,19 +108,19 @@ public class AddDVDActivty extends Activity {
     @Override
     public void onSaveInstanceState (Bundle savedInstanceState)
     {
-        String[] acteurs = new String[addActeurLayout.getChildCount()];
+        String[] formateurs = new String[addFormateurLayout.getChildCount()];
 
-        int Loops = addActeurLayout.getChildCount();
+        int Loops = addFormateurLayout.getChildCount();
 
         for(int Index = 0 ; Index < Loops; Index++)
         {
-            View child = addActeurLayout.getChildAt(Index);
+            View child = addFormateurLayout.getChildAt(Index);
 
             if(child instanceof EditText)
             {
-                acteurs[Index] = ((EditText)child).getText().toString();
+                formateurs[Index] = ((EditText)child).getText().toString();
             }
-            savedInstanceState.putStringArray("acteurs",acteurs);
+            savedInstanceState.putStringArray("Formateurs",formateurs);
             super.onSaveInstanceState(savedInstanceState);
         }
     }

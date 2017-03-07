@@ -8,10 +8,10 @@ import android.widget.TextView;
  * Created by Benjamin on 06/03/2017.
  */
 
-public class ViewDVDActivity extends Activity {
+public class ViewFormationActivity extends Activity {
 
-    TextView txtTitreDVD;
-    TextView txtAnneeDVD;
+    TextView txtTitreFormation;
+    TextView txtAnneeFormation;
     TextView txtFormateur1;
     TextView txtFormateur2;
     TextView Resume;
@@ -21,14 +21,14 @@ public class ViewDVDActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         //Affection du fichier de layout
-        setContentView(R.layout.activity_viewdvd);
+        setContentView(R.layout.activity_viewformation);
 
         //Obtention des références sur les composants
-        txtTitreDVD = (TextView)findViewById(R.id.titreDVD);
-        txtAnneeDVD = (TextView)findViewById(R.id.anneeDVD);
+        txtTitreFormation = (TextView)findViewById(R.id.titreFormation);
+        txtAnneeFormation = (TextView)findViewById(R.id.anneeFormation);
         txtFormateur1= (TextView)findViewById(R.id.formateur1);
         txtFormateur2 = (TextView)findViewById(R.id.formateur2);
-        Resume = (TextView)findViewById(R.id.resumeDVD);
+        Resume = (TextView)findViewById(R.id.resumeFormation);
 
     }
 
@@ -46,8 +46,8 @@ public class ViewDVDActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        txtTitreDVD.setText("Formations 1");
-        txtAnneeDVD.setText(
+        txtTitreFormation.setText("Formations 1");
+        txtAnneeFormation.setText(
                 String.format(getString(R.string.annee_de_sortie), 2014));
         txtFormateur1.setText("Moi");
         txtFormateur2.setText("Lui");
