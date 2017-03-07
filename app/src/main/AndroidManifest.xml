@@ -8,9 +8,16 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"/>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name">
+        </activity>
 
-        <activity android:name=".ViewDVDActivity">
+        <activity
+            android:name=".ViewDVDActivity">
+        </activity>
+        <activity
+            android:name=".AddDVDActivty">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
