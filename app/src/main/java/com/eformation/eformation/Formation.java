@@ -15,12 +15,17 @@ public class Formation {
     String[]formateurs;
     String resume;
 
-    public Formation(Cursor cursor) {
+    private Formation(Cursor cursor) {
         id = cursor.getLong(cursor.getColumnIndex("id"));
         titre = cursor.getString(cursor.getColumnIndex("titre"));
         annee = cursor.getInt(cursor.getColumnIndex("annee"));
-        formateurs = cursor.getString(cursor.getColumnIndex("acteurs")).split(";");
+        formateurs = cursor.getString(cursor.getColumnIndex("acteurs")).split(",");
         resume = cursor.getString(cursor.getColumnIndex("resume"));
+    }
+
+    public Formation()
+    {
+
     }
 
     public long getId(){

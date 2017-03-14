@@ -65,4 +65,6 @@ public class ViewFormationActivity extends Activity {
         super.onDestroy();
     }
 
+
+
 }
