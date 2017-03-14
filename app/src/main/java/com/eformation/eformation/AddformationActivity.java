@@ -8,10 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-/**
- * Created by Benjamin on 07/03/2017.
- */
-
 public class AddformationActivity extends Activity {
     EditText editTitreFormation;
     EditText editAnnee;

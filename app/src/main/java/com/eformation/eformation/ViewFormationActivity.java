@@ -4,10 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-/**
- * Created by Benjamin on 06/03/2017.
- */
-
 public class ViewFormationActivity extends Activity {
 
     TextView txtTitreFormation;
