@@ -5,15 +5,19 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import java.io.*;
+import android.widget.ListView;
 
+import java.io.*;
 public class MainActivity extends Activity {
 
+
+    ListView list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
+            list = (ListView)findViewById(R.id.main_List);
 
             SharedPreferences sharedPreferences = getSharedPreferences("com.eformation.eformation.prefs",Context.MODE_PRIVATE);
             if (!sharedPreferences.getBoolean("embeddedDataInserted",false))
