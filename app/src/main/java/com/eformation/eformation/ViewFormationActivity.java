@@ -1,17 +1,20 @@
 package com.eformation.eformation;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class ViewFormationActivity extends Activity {
 
     TextView txtTitreFormation;
     TextView txtAnneeFormation;
-    TextView txtFormateur1;
-    TextView txtFormateur2;
+    LinearLayout layoutFormateur;
     TextView Resume;
+
+    Formation formation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -23,9 +26,14 @@ public class ViewFormationActivity extends Activity {
         //Obtention des références sur les composants
         txtTitreFormation = (TextView)findViewById(R.id.titreFormation);
         txtAnneeFormation = (TextView)findViewById(R.id.anneeFormation);
-        txtFormateur1= (TextView)findViewById(R.id.formateur1);
-        txtFormateur2 = (TextView)findViewById(R.id.formateur2);
+        layoutFormateur = (LinearLayout) findViewById(R.id.layourFormateur);
+
         Resume = (TextView)findViewById(R.id.resumeFormation);
+
+        Intent intent = getIntent();
+        long formationid = intent.getLongExtra("formationid",-1);
+
+        formation = Formation.getFormation(this, formationid);
 
     }
 
@@ -43,12 +51,15 @@ public class ViewFormationActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        txtTitreFormation.setText("Formations 1");
-        txtAnneeFormation.setText(
-                String.format(getString(R.string.annee_de_sortie), 2014));
-        txtFormateur1.setText("Moi");
-        txtFormateur2.setText("Lui");
-        Resume.setText("Formations sur l'art de l'être et du paraître");
+        txtTitreFormation.setText(formation.getTitre());
+        txtAnneeFormation.setText(String.format(getString(R.string.annee_de_sortie),formation.getAnnee()));
+        for(String formateur : formation.getFormateurs())
+        {
+            TextView textView = new TextView(this);
+            textView.setText(formateur);
+            layoutFormateur.addView(textView);
+        }
+        Resume.setText(formation.getResume());
     }
 
     @Override
@@ -66,9 +77,5 @@ public class ViewFormationActivity extends Activity {
         super.onDestroy();
     }
 
-    public void setOnItemClickListener(AdapterView.OnItemClickListener listener)
-    {
-
-    }
 
 }

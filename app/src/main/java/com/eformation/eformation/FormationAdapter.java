@@ -1,6 +1,7 @@
 package com.eformation.eformation;
 
 import android.content.Context;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.view.*;
 import android.widget.TextView;
@@ -30,6 +31,8 @@ public class FormationAdapter extends ArrayAdapter<Formation> {
         }
         Formation formation = getItem(pos);
 
+        view.setTag(formation);
+
         TextView titre = (TextView) view.findViewById(R.id.listItemFormation_titre);
         TextView annee = (TextView) view.findViewById(R.id.listItemFormation_annee);
         TextView resume = (TextView) view.findViewById(R.id.listItem_resume);
@@ -39,8 +42,6 @@ public class FormationAdapter extends ArrayAdapter<Formation> {
         annee.setText(formation.getAnnee());
         resume.setText(formation.getResume());
 
-
-
         return view;
 
     }
@@ -49,6 +50,14 @@ public class FormationAdapter extends ArrayAdapter<Formation> {
     public long getItemId(int pos)
     {
         return getItem(pos).id;
+    }
+
+
+    public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
+        Object o = view.getTag();
+        if(o!= null) {
+            Formation formation = (Formation)o;
+        }
     }
 
 }

@@ -89,7 +89,7 @@ public class Formation {
         LocalSQLiteOpenHelper helper = new LocalSQLiteOpenHelper(context);
         SQLiteDatabase db = helper.getReadableDatabase();
         String where = "id = " + String.valueOf(id);
-        Cursor cursor = db.query(true, "Formation", new String[]{"id","titre","annee","acteurs","resume"},where,null,null,null,"titre",null);
+        Cursor cursor = db.query(true, "Formation", new String[]{"id","titre","annee","formateurs","resume"},where,null,null,null,"titre",null);
 
         if (cursor.moveToFirst())
             formation = new Formation(cursor);
@@ -111,13 +111,13 @@ public class Formation {
                 if(i<this.formateurs.length-1)
                     listFormateurs+=";";
             }
-            values.put("acteurs",listFormateurs);
+            values.put("formateurs",listFormateurs);
         }
         values.put("resume",this.resume);
 
         LocalSQLiteOpenHelper helper = new LocalSQLiteOpenHelper(context);
         SQLiteDatabase db = helper.getWritableDatabase();
-        this.id = db.insert("DVD",null,values);
+        this.id = db.insert("formation",null,values);
         db.close();
     }
 
@@ -138,7 +138,7 @@ public class Formation {
         String whereClause = "id ="+String.valueOf(this.id);
         LocalSQLiteOpenHelper helper = new LocalSQLiteOpenHelper(context);
         SQLiteDatabase db = helper.getWritableDatabase();
-        db.update("DVD", values,whereClause,null);
+        db.update("formation", values,whereClause,null);
         db.close();
     }
 

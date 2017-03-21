@@ -2,6 +2,7 @@ package com.eformation.eformation;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -21,7 +22,16 @@ public class MainActivity extends Activity {
         {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
+
             list = (ListView)findViewById(R.id.main_List);
+
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener()
+            {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View v, int position, long id){
+                    startViewFormationActivity(id);
+                }
+            });
 
             SharedPreferences sharedPreferences = getSharedPreferences("com.eformation.eformation.prefs",Context.MODE_PRIVATE);
             if (!sharedPreferences.getBoolean("embeddedDataInserted",false))
@@ -29,11 +39,6 @@ public class MainActivity extends Activity {
                 readEmbeddedData();
             }
 
-            list.setOnItemClickListener(new AdapterView.OnItemClickListener()
-            {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View v, int position, long id){}
-            });
 
         }
     }
@@ -49,13 +54,13 @@ public class MainActivity extends Activity {
             String line = null;
             while ((line = bufferedReader.readLine()) != null) {
 
-                String[] data = line.split("\\|");
+                String[] data = line.split("|");
                 if(data != null && data.length==4)
                 {
                     Formation formation = new Formation();
                     formation.titre = data[0];
                     formation.annee = Integer.parseInt(data[1]);
-                    formation.formateurs = data[2].split(",");
+                    formation.formateurs = data[2].split(";");
                     formation.resume = data[3];
                     formation.insert(this);
 
@@ -92,5 +97,12 @@ public class MainActivity extends Activity {
         FormationAdapter formationAdapter = new FormationAdapter(this, formationList);
         list.setAdapter(formationAdapter);
     }
+
+   private void startViewFormationActivity (long formationId)
+   {
+       Intent intent = new Intent(this, ViewFormationActivity.class);
+       intent.putExtra("formationId",formationId);
+       startActivity(intent);
+   }
 
 }

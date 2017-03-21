@@ -1,4 +1,4 @@
-Formation1|2017|JOSE,SIMON,HENRY|Formation sur le digital
-Formation2|2017|NICOLAS BECK|Formation sur le SIO
-Formation3|1965|GERO|Formation sur l'informatique
-Formation4|2017|GERO|Formation sur la gestion / compta
+0|Formation1|2017|JOSE;SIMON;HENRY|Formation sur le digital
+1|Formation2|2017|NICOLAS BECK|Formation sur le SIO
+2|Formation3|1965|GERO|Formation sur l'informatique
+3|Formation4|2017|GERO|Formation sur la gestion / compta

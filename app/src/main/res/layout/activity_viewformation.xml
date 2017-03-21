@@ -8,18 +8,15 @@
     android:weightSum="1">
 
 
-
     <TextView
-        android:text="Formation"
+        android:id="@+id/titreFormation"
         android:layout_width="135dp"
         android:layout_height="41dp"
-        tools:layout_editor_absoluteY="59dp"
         tools:layout_editor_absoluteX="8dp"
-        android:id="@+id/titreFormation"
+        tools:layout_editor_absoluteY="59dp"
         tools:text="Titre de la formation" />
 
     <TextView
-        android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="17dp"
         tools:layout_editor_absoluteY="108dp"
@@ -27,30 +24,21 @@
         android:id="@+id/anneeFormation"
         tools:text="année" />
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="17dp"
-        tools:layout_editor_absoluteY="26dp"
-        tools:layout_editor_absoluteX="8dp"
-        android:id="@+id/resumeFormation"
-        tools:text="Titre" />
 
-    <TextView
-        android:text="formateur1"
-        android:layout_width="wrap_content"
-        android:layout_height="17dp"
-        tools:layout_editor_absoluteY="160dp"
-        tools:layout_editor_absoluteX="10dp"
-        android:id="@+id/formateur1"
-        tools:text="formateur 1" />
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:id="@+id/layourFormateur">
 
-    <TextView
-        android:text="formateur2"
-        android:layout_width="wrap_content"
-        android:layout_height="17dp"
-        tools:layout_editor_absoluteY="193dp"
-        tools:layout_editor_absoluteX="8dp"
-        android:id="@+id/formateur2"
-        tools:text="formateur 2" />
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="16dp"
+           android:textSize="18sp"
+           android:minLines="5"
+           android:maxLines="15"
+           android:id="@+id/resumeFormation" />
+   </LinearLayout>
+
 </LinearLayout>
