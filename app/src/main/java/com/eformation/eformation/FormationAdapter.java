@@ -39,11 +39,10 @@ public class FormationAdapter extends ArrayAdapter<Formation> {
         TextView resume = (TextView) view.findViewById(R.id.listItem_resume);
 
 
-        try {
-            titre.setText(formation.getTitre());
-            annee.setText(formation.getAnnee());
-            resume.setText(formation.getResume());
-        }
+        titre.setText(formation.getTitre());
+        annee.setText(formation.getAnnee());
+        resume.setText(formation.getResume());
+
 
 
         return view;
