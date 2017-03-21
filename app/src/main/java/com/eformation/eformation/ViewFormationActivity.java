@@ -2,6 +2,7 @@ package com.eformation.eformation;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 public class ViewFormationActivity extends Activity {
@@ -65,6 +66,9 @@ public class ViewFormationActivity extends Activity {
         super.onDestroy();
     }
 
+    public void setOnItemClickListener(AdapterView.OnItemClickListener listener)
+    {
 
+    }
 
 }

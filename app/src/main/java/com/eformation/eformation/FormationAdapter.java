@@ -7,10 +7,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by Benjamin on 20/03/2017.
- */
-
 public class FormationAdapter extends ArrayAdapter<Formation> {
 
     Context context;
@@ -48,4 +44,11 @@ public class FormationAdapter extends ArrayAdapter<Formation> {
         return view;
 
     }
+
+    @Override
+    public long getItemId(int pos)
+    {
+        return getItem(pos).id;
+    }
+
 }

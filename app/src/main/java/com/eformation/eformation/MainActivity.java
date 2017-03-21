@@ -5,9 +5,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.io.*;
+import java.util.ArrayList;
+
 public class MainActivity extends Activity {
 
 
@@ -24,6 +28,13 @@ public class MainActivity extends Activity {
             {
                 readEmbeddedData();
             }
+
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener()
+            {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View v, int position, long id){}
+            });
+
         }
     }
 
@@ -73,4 +84,13 @@ public class MainActivity extends Activity {
             }
         }
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        ArrayList<Formation> formationList = Formation.getFormationList(this);
+        FormationAdapter formationAdapter = new FormationAdapter(this, formationList);
+        list.setAdapter(formationAdapter);
+    }
+
 }
