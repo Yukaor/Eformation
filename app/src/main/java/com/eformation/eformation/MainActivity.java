@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View v, int position, long id){
 
-                    startViewFormationActivity(id);
+                    startViewFormationActivity(id +1);
                 }
             });
 
