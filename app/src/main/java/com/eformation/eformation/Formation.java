@@ -19,7 +19,7 @@ public class Formation {
         id = cursor.getLong(cursor.getColumnIndex("id"));
         titre = cursor.getString(cursor.getColumnIndex("titre"));
         annee = cursor.getInt(cursor.getColumnIndex("annee"));
-        formateurs = cursor.getString(cursor.getColumnIndex("acteurs")).split(",");
+        formateurs = cursor.getString(cursor.getColumnIndex("formateurs")).split("\\;");
         resume = cursor.getString(cursor.getColumnIndex("resume"));
     }
 
@@ -72,7 +72,7 @@ public class Formation {
         ArrayList<Formation> listFormation = new ArrayList<>();
         LocalSQLiteOpenHelper helper = new LocalSQLiteOpenHelper(context);
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.query(true,"Formation", new String[]{"id","titre","annee","formateurs","resume"}, null, null, null, null,"titre", null);
+        Cursor cursor = db.query(true, "Formation", new String[]{"id","titre","annee","formateurs","resume"}, null, null, null, null,"titre", null);
 
         while(cursor.moveToNext()){
             listFormation.add(new Formation(cursor));
@@ -117,7 +117,7 @@ public class Formation {
 
         LocalSQLiteOpenHelper helper = new LocalSQLiteOpenHelper(context);
         SQLiteDatabase db = helper.getWritableDatabase();
-        this.id = db.insert("formation",null,values);
+        this.id = db.insert("Formation",null,values);
         db.close();
     }
 
@@ -138,7 +138,7 @@ public class Formation {
         String whereClause = "id ="+String.valueOf(this.id);
         LocalSQLiteOpenHelper helper = new LocalSQLiteOpenHelper(context);
         SQLiteDatabase db = helper.getWritableDatabase();
-        db.update("formation", values,whereClause,null);
+        db.update("Formation", values,whereClause,null);
         db.close();
     }
 

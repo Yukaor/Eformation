@@ -29,18 +29,24 @@ public class MainActivity extends Activity {
             {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View v, int position, long id){
+
                     startViewFormationActivity(id);
                 }
             });
 
-            SharedPreferences sharedPreferences = getSharedPreferences("com.eformation.eformation.prefs",Context.MODE_PRIVATE);
-            if (!sharedPreferences.getBoolean("embeddedDataInserted",false))
-            {
+            SharedPreferences sharedPreferences = getSharedPreferences("com.eformation.eformation.prefs", Context.MODE_PRIVATE);
+            if (!sharedPreferences.getBoolean("embeddedDataInserted",false)) {
                 readEmbeddedData();
             }
-
-
         }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        ArrayList<Formation> formationList = Formation.getFormationList(this);
+        FormationAdapter formationAdapter = new FormationAdapter(this, formationList);
+        list.setAdapter(formationAdapter);
     }
 
     private void readEmbeddedData() {
@@ -54,14 +60,15 @@ public class MainActivity extends Activity {
             String line = null;
             while ((line = bufferedReader.readLine()) != null) {
 
-                String[] data = line.split("|");
-                if(data != null && data.length==4)
+                String[] data = line.split("\\|");
+                if(data != null && data.length==5)
                 {
                     Formation formation = new Formation();
-                    formation.titre = data[0];
-                    formation.annee = Integer.parseInt(data[1]);
-                    formation.formateurs = data[2].split(";");
-                    formation.resume = data[3];
+                    formation.id = Long.decode(data[0]);
+                    formation.titre = data[1];
+                    formation.annee = Integer.decode(data[2]);
+                    formation.formateurs = data[3].split("\\;");
+                    formation.resume = data[4];
                     formation.insert(this);
 
                 }
@@ -78,9 +85,9 @@ public class MainActivity extends Activity {
                     bufferedReader.close();
                     reader.close();
                     SharedPreferences sharedPreferences = getSharedPreferences("com.eformation.eformation.prefs", Context.MODE_PRIVATE);
-                    Editor editor = sharedPreferences.edit();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("embeddedDataInserted",true);
-                    editor.apply();
+                    editor.commit();
                 }
                 catch (IOException e)
                 {
@@ -88,14 +95,6 @@ public class MainActivity extends Activity {
                 }
             }
         }
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        ArrayList<Formation> formationList = Formation.getFormationList(this);
-        FormationAdapter formationAdapter = new FormationAdapter(this, formationList);
-        list.setAdapter(formationAdapter);
     }
 
    private void startViewFormationActivity (long formationId)

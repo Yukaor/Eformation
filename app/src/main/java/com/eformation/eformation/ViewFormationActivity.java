@@ -31,7 +31,7 @@ public class ViewFormationActivity extends Activity {
         Resume = (TextView)findViewById(R.id.resumeFormation);
 
         Intent intent = getIntent();
-        long formationid = intent.getLongExtra("formationid",-1);
+        long formationid = intent.getLongExtra("formationId",-1);
 
         formation = Formation.getFormation(this, formationid);
 

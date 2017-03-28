@@ -22,9 +22,9 @@ public class FormationAdapter extends ArrayAdapter<Formation> {
     public View getView(int pos, View convertView, ViewGroup parent)
     {
         View view;
-        if(convertView==null) {
-            LayoutInflater layoutInflater =(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = layoutInflater.inflate(R.layout.listitem_dvd, parent);
+        if(convertView == null) {
+            LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = layoutInflater.inflate(R.layout.listitem_dvd, parent,false);
         }
         else {
             view = convertView;
@@ -39,19 +39,12 @@ public class FormationAdapter extends ArrayAdapter<Formation> {
 
 
         titre.setText(formation.getTitre());
-        annee.setText(formation.getAnnee());
+        annee.setText(String.valueOf(formation.getAnnee()));
         resume.setText(formation.getResume());
 
         return view;
 
     }
-
-    @Override
-    public long getItemId(int pos)
-    {
-        return getItem(pos).id;
-    }
-
 
     public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
         Object o = view.getTag();
