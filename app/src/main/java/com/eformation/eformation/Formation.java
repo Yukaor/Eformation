@@ -9,12 +9,15 @@ import java.util.ArrayList;
 
 public class Formation {
 
+    //attributs
     long id;
     String titre;
     int annee;
     String[]formateurs;
     String resume;
+    long dateVisionnage;
 
+    //Constructeurs
     private Formation(Cursor cursor) {
         id = cursor.getLong(cursor.getColumnIndex("id"));
         titre = cursor.getString(cursor.getColumnIndex("titre"));
@@ -28,6 +31,8 @@ public class Formation {
 
     }
 
+
+    //Get & set
     public long getId(){
         return id;
     }
@@ -68,6 +73,16 @@ public class Formation {
         this.resume = resume;
     }
 
+    public long getDateVisionnage() {
+        return dateVisionnage;
+    }
+
+    public void setDateVisionnage(long dateVisionnage) {
+        this.dateVisionnage = dateVisionnage;
+    }
+
+
+    //Methodes
     public static ArrayList<Formation> getFormationList(Context context){
         ArrayList<Formation> listFormation = new ArrayList<>();
         LocalSQLiteOpenHelper helper = new LocalSQLiteOpenHelper(context);
@@ -99,6 +114,8 @@ public class Formation {
 
         return formation;
     }
+
+
 
     public void insert(Context context){
         ContentValues values = new ContentValues();

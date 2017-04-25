@@ -1,9 +1,15 @@
 package com.eformation.eformation;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.AdapterView;
+import android.view.View;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,6 +19,8 @@ public class ViewFormationActivity extends Activity {
     TextView txtAnneeFormation;
     LinearLayout layoutFormateur;
     TextView Resume;
+    Button setDateVisionnage;
+    TextView txtDateDernierVisionnage;
 
     Formation formation;
 
@@ -29,11 +37,21 @@ public class ViewFormationActivity extends Activity {
         layoutFormateur = (LinearLayout) findViewById(R.id.layourFormateur);
 
         Resume = (TextView)findViewById(R.id.resumeFormation);
+        setDateVisionnage = (Button)findViewById(R.id.setDateVisionnage);
+        txtDateDernierVisionnage = (TextView)findViewById(R.id.dateVisionnage);
 
         Intent intent = getIntent();
         long formationid = intent.getLongExtra("formationId",-1);
 
         formation = Formation.getFormation(this, formationid);
+
+        setDateVisionnage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                showDatePicker();
+            }
+        });
 
     }
 
@@ -75,6 +93,44 @@ public class ViewFormationActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+
+    private void showDatePicker() {
+        DatePickerDialog datePickerDialog;
+
+        DatePickerDialog.OnDateSetListener onDateSetListener =
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(year, monthOfYear, dayOfMonth);
+
+                        formation.setDateVisionnage(calendar.getTimeInMillis());
+                        formation.update(ViewFormationActivity.this);
+
+                        SimpleDateFormat simpleDateFormat =
+                                new SimpleDateFormat("dd-MM-yyyy");
+
+                        String dateValue = String.format(
+                                simpleDateFormat.format(calendar.getTime()));
+
+                        txtDateDernierVisionnage.setText(dateValue);
+                    }
+        };
+
+        Calendar calendar = Calendar.getInstance();
+        if(formation.dateVisionnage>0)
+            calendar.setTimeInMillis(formation.dateVisionnage);
+
+        datePickerDialog =
+                new DatePickerDialog(this,onDateSetListener,
+                        calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH));
+
+        datePickerDialog.show();
+
     }
 
 

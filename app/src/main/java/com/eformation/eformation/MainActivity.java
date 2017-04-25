@@ -8,6 +8,7 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 
 import java.io.*;
@@ -23,7 +24,7 @@ public class MainActivity extends Activity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
 
-            list = (ListView)findViewById(R.id.main_List);
+            list = (ListView) findViewById(R.id.main_List);
 
             list.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {
