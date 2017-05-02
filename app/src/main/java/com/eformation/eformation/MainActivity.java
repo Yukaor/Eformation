@@ -1,20 +1,22 @@
 package com.eformation.eformation;
 
-import android.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ListView;
 
 import java.io.*;
 import java.util.ArrayList;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
 
     ListView list;
@@ -24,16 +26,8 @@ public class MainActivity extends Activity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
 
-            list = (ListView) findViewById(R.id.main_List);
-
-            list.setOnItemClickListener(new AdapterView.OnItemClickListener()
-            {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View v, int position, long id){
-
-                    startViewFormationActivity(id +1);
-                }
-            });
+            ListFormationFragment listFormationFragment = new ListFormationFragment();
+            openFragment(listFormationFragment);
 
             SharedPreferences sharedPreferences = getSharedPreferences("com.eformation.eformation.prefs", Context.MODE_PRIVATE);
             if (!sharedPreferences.getBoolean("embeddedDataInserted",false)) {
@@ -42,12 +36,20 @@ public class MainActivity extends Activity {
         }
     }
 
+    private void openFragment(Fragment fragment)
+    {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.main_placeHolder, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
     @Override
     public void onResume(){
         super.onResume();
-        ArrayList<Formation> formationList = Formation.getFormationList(this);
-        FormationAdapter formationAdapter = new FormationAdapter(this, formationList);
-        list.setAdapter(formationAdapter);
+        ListFormationFragment listFormationFragment = new ListFormationFragment();
+        openFragment(listFormationFragment);
     }
 
     private void readEmbeddedData() {

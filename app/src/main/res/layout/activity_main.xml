@@ -11,9 +11,9 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.eformation.eformation.MainActivity">
 
-    <ListView
-        android:id="@+id/main_List"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:id="@+id/main_placeHolder"></FrameLayout>
 
 </RelativeLayout>
