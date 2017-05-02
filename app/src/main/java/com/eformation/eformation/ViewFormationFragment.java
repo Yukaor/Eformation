@@ -1,19 +1,23 @@
 package com.eformation.eformation;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class ViewFormationActivity extends Activity {
+public class ViewFormationFragment extends Fragment
+{
 
     TextView txtTitreFormation;
     TextView txtAnneeFormation;
@@ -25,25 +29,23 @@ public class ViewFormationActivity extends Activity {
     Formation formation;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater layoutInflater, ViewGroup container, Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
         //Affection du fichier de layout
-        setContentView(R.layout.activity_viewformation);
+        View view = layoutInflater.inflate(R.layout.activity_viewformation,null);
 
         //Obtention des références sur les composants
-        txtTitreFormation = (TextView)findViewById(R.id.titreFormation);
-        txtAnneeFormation = (TextView)findViewById(R.id.anneeFormation);
-        layoutFormateur = (LinearLayout) findViewById(R.id.layourFormateur);
+        txtTitreFormation = (TextView)view.findViewById(R.id.titreFormation);
+        txtAnneeFormation = (TextView)view.findViewById(R.id.anneeFormation);
+        layoutFormateur = (LinearLayout) view.findViewById(R.id.layourFormateur);
+        Resume = (TextView)view.findViewById(R.id.resumeFormation);
+        setDateVisionnage = (Button)view.findViewById(R.id.setDateVisionnage);
+        txtDateDernierVisionnage = (TextView)view.findViewById(R.id.dateVisionnage);
 
-        Resume = (TextView)findViewById(R.id.resumeFormation);
-        setDateVisionnage = (Button)findViewById(R.id.setDateVisionnage);
-        txtDateDernierVisionnage = (TextView)findViewById(R.id.dateVisionnage);
+        long formationid = getArguments().getLong("formationId",-1);
 
-        Intent intent = getIntent();
-        long formationid = intent.getLongExtra("formationId",-1);
-
-        formation = Formation.getFormation(this, formationid);
+        formation = Formation.getFormation(getActivity(), formationid);
 
         setDateVisionnage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,48 +55,24 @@ public class ViewFormationActivity extends Activity {
             }
         });
 
+        return view;
+
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
-
-    @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
 
         txtTitreFormation.setText(formation.getTitre());
         txtAnneeFormation.setText(String.format(getString(R.string.annee_de_sortie),formation.getAnnee()));
         for(String formateur : formation.getFormateurs())
         {
-            TextView textView = new TextView(this);
+            TextView textView = new TextView(getActivity());
             textView.setText(formateur);
             layoutFormateur.addView(textView);
         }
         Resume.setText(formation.getResume());
     }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
 
     private void showDatePicker() {
         DatePickerDialog datePickerDialog;
@@ -107,7 +85,7 @@ public class ViewFormationActivity extends Activity {
                         calendar.set(year, monthOfYear, dayOfMonth);
 
                         formation.setDateVisionnage(calendar.getTimeInMillis());
-                        formation.update(ViewFormationActivity.this);
+                        formation.update(getActivity());
 
                         SimpleDateFormat simpleDateFormat =
                                 new SimpleDateFormat("dd-MM-yyyy");
@@ -124,7 +102,7 @@ public class ViewFormationActivity extends Activity {
             calendar.setTimeInMillis(formation.dateVisionnage);
 
         datePickerDialog =
-                new DatePickerDialog(this,onDateSetListener,
+                new DatePickerDialog(getActivity(),onDateSetListener,
                         calendar.get(Calendar.YEAR),
                         calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH));

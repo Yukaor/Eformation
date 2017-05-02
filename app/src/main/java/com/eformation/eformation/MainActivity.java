@@ -9,17 +9,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentManager;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.io.*;
-import java.util.ArrayList;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements ListFormationFragment.OnFormationSelectedListener {
 
-
-    ListView list;
+    @Override
+    public void onFormationSelected(long formationid)
+    {
+        startViewFormationActivity(formationid+1);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         {
@@ -102,9 +102,32 @@ public class MainActivity extends FragmentActivity {
 
    private void startViewFormationActivity (long formationId)
    {
-       Intent intent = new Intent(this, ViewFormationActivity.class);
-       intent.putExtra("formationId",formationId);
-       startActivity(intent);
+       ViewFormationFragment viewFormationFragment = new ViewFormationFragment();
+
+       //Prendre en charge le passage de paramètres
+       Bundle bundle = new Bundle();
+       bundle.putLong("formationId",formationId);
+       viewFormationFragment.setArguments(bundle);
+
+       openDetailFragement(viewFormationFragment);
+   }
+
+   private void openDetailFragement(Fragment fragment)
+   {
+       FragmentManager fragmentManager = getSupportFragmentManager();
+       FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+       if(findViewById(R.id.detail_placeHolder)==null)
+       {
+           transaction.replace(R.id.main_placeHolder,fragment);
+       }
+       else {
+           transaction.replace(R.id.detail_placeHolder,fragment);
+       }
+
+       transaction.addToBackStack(null);
+
+       transaction.commit();
    }
 
 }

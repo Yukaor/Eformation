@@ -19,7 +19,7 @@
         </activity>
 
         <activity
-            android:name=".ViewFormationActivity">
+            android:name=".ViewFormationFragment">
         </activity>
         <activity
             android:name=".AddformationActivity">

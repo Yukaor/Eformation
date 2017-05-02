@@ -1,8 +1,10 @@
 package com.eformation.eformation;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +20,29 @@ import java.util.ArrayList;
 public class ListFormationFragment extends Fragment {
 
     ListView list;
+    OnFormationSelectedListener onFormationSelectedListener;
+
+    public interface OnFormationSelectedListener {
+        public void onFormationSelected(long formationid);
+    }
+
+    @Override
+    public void onAttach(Activity activity)
+    {
+        super.onAttach(activity);
+        try {
+            onFormationSelectedListener = (OnFormationSelectedListener) activity;
+        }
+        catch (Exception e)
+        {
+            Log.e("e", "onAttach: "+e.getMessage(),e );
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_listdvd, null);
+        View view = inflater.inflate(R.layout.fragment_listdvd,null);
 
         list = (ListView)view.findViewById(R.id.main_List);
 
@@ -30,7 +50,11 @@ public class ListFormationFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                startViewFormationActivity(id+1);
+                if(onFormationSelectedListener !=null)
+                {
+                    onFormationSelectedListener.onFormationSelected(id);
+                }
+
             }
         });
         return view;
@@ -43,12 +67,5 @@ public class ListFormationFragment extends Fragment {
         ArrayList<Formation> formationList = Formation.getFormationList(getActivity());
         FormationAdapter formationAdapter = new FormationAdapter(getActivity(),formationList);
         list.setAdapter(formationAdapter);
-    }
-
-    private void startViewFormationActivity(long formationid)
-    {
-        Intent intent = new Intent(getActivity(),ViewFormationActivity.class);
-        intent.putExtra("formationId",formationid);
-        startActivity(intent);
     }
 }
