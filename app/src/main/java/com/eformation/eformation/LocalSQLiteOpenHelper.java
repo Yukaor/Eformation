@@ -36,4 +36,9 @@ public class LocalSQLiteOpenHelper extends SQLiteOpenHelper {
         String sqlcommand = "ALTER TABLE Formation ADD COLUMN dateVisionnage NUMERIC";
         db.execSQL(sqlcommand);
     }
+
+    public static void deleteDataBase(Context context)
+    {
+        context.deleteDatabase(DB_NAME);
+    }
 }

@@ -7,4 +7,12 @@
     <string name="resume">Résumé</string>
     <string name="date_dernier_visionnage"> Date du dernier visionnage</string>
     <string name="date_dernier_visionnage_avec_valeur"></string>
+    <string name="reinitialiser">Réinitialiser la base de données</string>
+    <string name="infos">Informations</string>
+    <string name="confirmer_reinitialisation_title">Confirmation</string>
+    <string name="confirmer_reinitialisation_message">Etes-vous sûr de vouloir réinitialiser la base de données ? (Action irréversible)</string>
+    <string name="non">non</string>
+    <string name="oui">oui</string>
+    <string name="fermer">Fermer</string>
+    <string name="informations_message">L\'application Eformation est une application appartenant au groupe Galaxy-Swiss Bourdin.\n\nLe laboratoire Galaxy Swiss Bourdin (GSB) est issu de la fusion entre le géant américain Galaxy (spécialisé dans le secteur des maladies virales dont le SIDA et les hépatites) et le conglomérat européen Swiss Bourdin (travaillant sur des médicaments plus conventionnels), lui même déjà union de trois petits laboratoires .\n\nEn 2009, les deux géants pharmaceutiques ont uni leurs forces pour créer un leader de ce secteur industriel. L’entité Galaxy Swiss Bourdin Europe a établi son siège administratif à Paris.\n\nLe siège social de la multinationale est situé à Philadelphie, Pennsylvanie, aux Etats-Unis.</string>
 </resources>
