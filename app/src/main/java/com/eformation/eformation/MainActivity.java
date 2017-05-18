@@ -1,10 +1,12 @@
 package com.eformation.eformation;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -30,6 +32,7 @@ import java.io.*;
 public class MainActivity extends AppCompatActivity implements ListFormationFragment.OnFormationSelectedListener {
 
     DrawerLayout drawerLayout;
+    private static final String TAG_FRAGMENT_LISTDVD="FragementListFormation";
 
     @Override
     public void onFormationSelected(long formationid) {
@@ -72,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements ListFormationFrag
             });
 
             ListFormationFragment listFormationFragment = new ListFormationFragment();
-            openFragment(listFormationFragment);
+            openFragment(listFormationFragment, TAG_FRAGMENT_LISTDVD);
 
             SharedPreferences sharedPreferences = getSharedPreferences("com.eformation.eformation.prefs", Context.MODE_PRIVATE);
             if (!sharedPreferences.getBoolean("embeddedDataInserted", false)) {
@@ -81,10 +84,10 @@ public class MainActivity extends AppCompatActivity implements ListFormationFrag
         }
     }
 
-    private void openFragment(Fragment fragment) {
+    private void openFragment(Fragment fragment, String tag) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.main_placeHolder, fragment);
+        transaction.replace(R.id.main_placeHolder, fragment, tag);
         transaction.addToBackStack(null);
         transaction.commit();
     }
@@ -93,48 +96,13 @@ public class MainActivity extends AppCompatActivity implements ListFormationFrag
     public void onResume() {
         super.onResume();
         ListFormationFragment listFormationFragment = new ListFormationFragment();
-        openFragment(listFormationFragment);
+        openFragment(listFormationFragment, TAG_FRAGMENT_LISTDVD);
     }
 
     private void readEmbeddedData() {
-        InputStreamReader reader = null;
-        InputStream file = null;
-        BufferedReader bufferedReader = null;
-        try {
-            file = getAssets().open("data.txt");
-            reader = new InputStreamReader(file);
-            bufferedReader = new BufferedReader(reader);
-            String line = null;
-            while ((line = bufferedReader.readLine()) != null) {
+        AsyncReadEmbeddedData asyncReadEmbeddedData = new AsyncReadEmbeddedData();
+        asyncReadEmbeddedData.execute("data.txt");
 
-                String[] data = line.split("\\|");
-                if (data != null && data.length == 5) {
-                    Formation formation = new Formation();
-                    formation.id = Long.decode(data[0]);
-                    formation.titre = data[1];
-                    formation.annee = Integer.decode(data[2]);
-                    formation.formateurs = data[3].split("\\;");
-                    formation.resume = data[4];
-                    formation.insert(this);
-
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (bufferedReader != null) {
-                try {
-                    bufferedReader.close();
-                    reader.close();
-                    SharedPreferences sharedPreferences = getSharedPreferences("com.eformation.eformation.prefs", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("embeddedDataInserted", true);
-                    editor.commit();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
     private void startViewFormationActivity(long formationId) {
@@ -204,11 +172,6 @@ public class MainActivity extends AppCompatActivity implements ListFormationFrag
                     public void onClick(DialogInterface dialog, int which) {
                         LocalSQLiteOpenHelper.deleteDataBase(MainActivity.this);
                         readEmbeddedData();
-
-                        Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
                     }
                 }
         );
@@ -232,4 +195,102 @@ public class MainActivity extends AppCompatActivity implements ListFormationFrag
         builder.create().show();
 
     }
+
+    //Partie Asynchrone, insertion dans la base de données.
+    class AsyncReadEmbeddedData extends AsyncTask<String, Integer, Boolean>
+    {
+
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute()
+        {
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setTitle(R.string.initialisation_de_la_base_de_donnees);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params)
+        {
+            Boolean result = false;
+            String dataFile = params[0];
+            InputStreamReader reader = null;
+            InputStream file = null;
+            BufferedReader bufferedReader = null;
+            try {
+
+                int counter =0;
+                file = getAssets().open(dataFile);
+                reader = new InputStreamReader(file);
+                bufferedReader = new BufferedReader(reader);
+                String line = null;
+                while ((line = bufferedReader.readLine()) != null) {
+
+                    String[] data = line.split("\\|");
+                    if (data != null && data.length == 5) {
+                        Formation formation = new Formation();
+                        formation.id = Long.decode(data[0]);
+                        formation.titre = data[1];
+                        formation.annee = Integer.decode(data[2]);
+                        formation.formateurs = data[3].split("\\,");
+                        formation.resume = data[4];
+                        formation.insert(MainActivity.this);
+                        //On affiche en live le chargement à l'utilisateur
+                        publishProgress(++counter);
+
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (bufferedReader != null) {
+                    try {
+                        bufferedReader.close();
+                        reader.close();
+                        SharedPreferences sharedPreferences = getSharedPreferences("com.eformation.eformation.prefs", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean("embeddedDataInserted", true);
+                        editor.commit();
+                        result = true;
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            return result;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values)
+        {
+            progressDialog.setMessage(String.format(getString(
+                    R.string.x_formation_inseres_dans_la_base_de_donnees),
+                    values[0]));
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result)
+        {
+            progressDialog.dismiss();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            ListFormationFragment listFormationFragment = (ListFormationFragment)fragmentManager.findFragmentByTag(TAG_FRAGMENT_LISTDVD);
+
+            if(listFormationFragment!=null)
+            {
+                listFormationFragment.updateFormationList();
+            }
+        }
+    };
+
 }
+

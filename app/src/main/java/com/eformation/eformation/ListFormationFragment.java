@@ -64,8 +64,13 @@ public class ListFormationFragment extends Fragment {
     public void onResume()
     {
         super.onResume();
+        updateFormationList();
+    }
+
+    public void updateFormationList()
+    {
         ArrayList<Formation> formationList = Formation.getFormationList(getActivity());
-        FormationAdapter formationAdapter = new FormationAdapter(getActivity(),formationList);
+        FormationAdapter formationAdapter = new FormationAdapter(getActivity(), formationList);
         list.setAdapter(formationAdapter);
     }
 }
