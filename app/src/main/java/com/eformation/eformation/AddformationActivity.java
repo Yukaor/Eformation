@@ -1,6 +1,7 @@
 package com.eformation.eformation;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -52,6 +53,41 @@ public class AddformationActivity extends Activity {
             //Aucun acteur saisi, on affiche un composant editText vide
             addFormateur(null);
         }
+
+        btnOk.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Formation formation = new Formation();
+                formation.id = Formation.getFormationList(getApplicationContext()).size();
+                formation.titre = editTitreFormation.getText().toString();
+                formation.resume = editResume.getText().toString();
+                formation.annee = Integer.valueOf(editAnnee.getText().toString());
+
+                String[] formateurs = new String[addFormateurLayout.getChildCount()];
+
+                int Loops = addFormateurLayout.getChildCount();
+
+                for(int Index = 0 ; Index < Loops; Index++)
+                {
+                    View child = addFormateurLayout.getChildAt(Index);
+
+                    if(child instanceof EditText)
+                    {
+                        formateurs[Index] = ((EditText)child).getText().toString();
+                    }
+                }
+
+                formation.formateurs =  formateurs;
+                formation.dateVisionnage = 0;
+                formation.insert(AddformationActivity.this);
+
+                Intent intent = new Intent(AddformationActivity.this,MainActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
     }
 

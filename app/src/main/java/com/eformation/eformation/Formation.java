@@ -28,7 +28,6 @@ public class Formation {
 
     public Formation()
     {
-
     }
 
 

@@ -24,6 +24,9 @@
         <activity
             android:name=".AddformationActivity">
         </activity>
+        <service android:name=".EFormationIntentService">
+
+        </service>
 
 </application>
 

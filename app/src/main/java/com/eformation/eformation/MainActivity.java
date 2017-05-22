@@ -2,12 +2,16 @@ package com.eformation.eformation;
 
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -292,5 +296,25 @@ public class MainActivity extends AppCompatActivity implements ListFormationFrag
         }
     };
 
+    //appel d'un service qui
+    private void startService()
+    {
+        BroadcastReceiver mybroadcastreceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String receivedMessage = intent.getStringExtra("replyMessage");
+            }
+        };
+
+
+        Intent intent = new Intent(MainActivity.this, EFormationIntentService.class);
+        intent.putExtra("waitDuration", 10000);
+        //Intention implicite
+        IntentFilter intentFilter = new IntentFilter("Eformation.SerivceEnded");
+
+        registerReceiver(mybroadcastreceiver,intentFilter);
+
+        startService(intent);
+    }
 }
 
