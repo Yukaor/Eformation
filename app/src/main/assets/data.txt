@@ -1,4 +1,4 @@
-0|Formation1|2017|JOSE;SIMON;HENRY|Formation sur le digital
-1|Formation2|2017|NICOLAS BECK|Formation sur le SIO
-2|Formation3|1965|GERO|Formation sur l'informatique
-3|Formation4|2017|GERO|Formation sur la gestion / compta
+0|Formation1|2017|JOSE;SIMON;HENRY|Formation sur le digital, la communication numérique et la maitrise des masses sociales informatiques|1495642818312
+1|Formation2|2017|NICOLAS BECK| Présentation du contenu SIO, BTS Services Informatiques aux Organisations|1495642818312
+2|Formation3|1965|CLAUDE GERO|Formation sur le commencement de l'informatique, les premiers ordinateurs et sur l'histoire du numérique|1495642818312
+3|Formation4|2017|CLAUDE GERO|Formation sur la gestion / comptabilité d'une entreprise|1495642818312

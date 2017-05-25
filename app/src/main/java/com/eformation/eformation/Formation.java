@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Formation {
 
@@ -24,6 +25,7 @@ public class Formation {
         annee = cursor.getInt(cursor.getColumnIndex("annee"));
         formateurs = cursor.getString(cursor.getColumnIndex("formateurs")).split("\\;");
         resume = cursor.getString(cursor.getColumnIndex("resume"));
+        dateVisionnage = cursor.getLong(cursor.getColumnIndex("dateVisionnage"));
     }
 
     public Formation()
@@ -86,7 +88,7 @@ public class Formation {
         ArrayList<Formation> listFormation = new ArrayList<>();
         LocalSQLiteOpenHelper helper = new LocalSQLiteOpenHelper(context);
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.query(true, "Formation", new String[]{"id","titre","annee","formateurs","resume"}, null, null, null, null,"titre", null);
+        Cursor cursor = db.query(true, "Formation", new String[]{"id","titre","annee","formateurs","resume","dateVisionnage"}, null, null, null, null,"id", null);
 
         while(cursor.moveToNext()){
             listFormation.add(new Formation(cursor));
@@ -103,7 +105,7 @@ public class Formation {
         LocalSQLiteOpenHelper helper = new LocalSQLiteOpenHelper(context);
         SQLiteDatabase db = helper.getReadableDatabase();
         String where = "id = " + String.valueOf(id);
-        Cursor cursor = db.query(true, "Formation", new String[]{"id","titre","annee","formateurs","resume"},where,null,null,null,"titre",null);
+        Cursor cursor = db.query(true, "Formation", new String[]{"id","titre","annee","formateurs","resume","dateVisionnage"},where,null,null,null,"titre",null);
 
         if (cursor.moveToFirst())
             formation = new Formation(cursor);
@@ -130,7 +132,7 @@ public class Formation {
             values.put("formateurs",listFormateurs);
         }
         values.put("resume",this.resume);
-
+        values.put("dateVisionnage",this.dateVisionnage);
         LocalSQLiteOpenHelper helper = new LocalSQLiteOpenHelper(context);
         SQLiteDatabase db = helper.getWritableDatabase();
         this.id = db.insert("Formation",null,values);
@@ -151,6 +153,7 @@ public class Formation {
             values.put("formateurs",listFormateurs);
         }
         values.put("resume",this.resume);
+        values.put("dateVisionnage",this.dateVisionnage);
         String whereClause = "id ="+String.valueOf(this.id);
         LocalSQLiteOpenHelper helper = new LocalSQLiteOpenHelper(context);
         SQLiteDatabase db = helper.getWritableDatabase();

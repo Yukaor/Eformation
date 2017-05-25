@@ -20,5 +20,5 @@
         <item>Nouvelle formation</item>
     </string-array>
     <string name="initialisation_de_la_base_de_donnees">Initilisation de la base de données</string>
-    <string name="x_formation_inseres_dans_la_base_de_donnees">"%d Formation insérés dans la base"</string>
+    <string name="x_formation_inseres_dans_la_base_de_donnees">"%d Formation insérées dans la base"</string>
 </resources>

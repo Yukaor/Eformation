@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements ListFormationFrag
     private void readEmbeddedData() {
         AsyncReadEmbeddedData asyncReadEmbeddedData = new AsyncReadEmbeddedData();
         asyncReadEmbeddedData.execute("data.txt");
-
     }
 
     private void startViewFormationActivity(long formationId) {
@@ -234,13 +233,14 @@ public class MainActivity extends AppCompatActivity implements ListFormationFrag
                 while ((line = bufferedReader.readLine()) != null) {
 
                     String[] data = line.split("\\|");
-                    if (data != null && data.length == 5) {
+                    if (data != null && data.length == 6) {
                         Formation formation = new Formation();
                         formation.id = Long.decode(data[0]);
                         formation.titre = data[1];
                         formation.annee = Integer.decode(data[2]);
                         formation.formateurs = data[3].split("\\,");
                         formation.resume = data[4];
+                        formation.dateVisionnage = Long.decode(data[5]);
                         formation.insert(MainActivity.this);
                         //On affiche en live le chargement à l'utilisateur
                         publishProgress(++counter);
@@ -296,7 +296,7 @@ public class MainActivity extends AppCompatActivity implements ListFormationFrag
         }
     };
 
-    //appel d'un service qui
+    //appel d'un service qui met en pause (essai)
     private void startService()
     {
         BroadcastReceiver mybroadcastreceiver = new BroadcastReceiver() {
@@ -316,5 +316,6 @@ public class MainActivity extends AppCompatActivity implements ListFormationFrag
 
         startService(intent);
     }
+
 }
 

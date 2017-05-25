@@ -27,6 +27,9 @@ public class ViewFormationFragment extends Fragment
 
     Formation formation;
 
+    SimpleDateFormat simpleDateFormat =
+            new SimpleDateFormat("dd-MM-yyyy");
+
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup container, Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -45,6 +48,10 @@ public class ViewFormationFragment extends Fragment
         long formationid = getArguments().getLong("formationId",-1);
 
         formation = Formation.getFormation(getActivity(), formationid);
+
+        if(formation.getDateVisionnage() != 0)
+        txtDateDernierVisionnage.setText(String.format(
+                simpleDateFormat.format(formation.getDateVisionnage())));
 
         setDateVisionnage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +80,13 @@ public class ViewFormationFragment extends Fragment
         Resume.setText(formation.getResume());
     }
 
+    //Lorsque l'on quitte cet écran, on met à jour la formation (pour la date surtout).
+    @Override
+    public void onPause() {
+        super.onPause();
+        formation.update(getActivity());
+    }
+
     private void showDatePicker() {
         DatePickerDialog datePickerDialog;
 
@@ -83,22 +97,20 @@ public class ViewFormationFragment extends Fragment
                         Calendar calendar = Calendar.getInstance();
                         calendar.set(year, monthOfYear, dayOfMonth);
 
-                        formation.setDateVisionnage(calendar.getTimeInMillis());
-                        formation.update(getActivity());
-
-                        SimpleDateFormat simpleDateFormat =
-                                new SimpleDateFormat("dd-MM-yyyy");
-
                         String dateValue = String.format(
                                 simpleDateFormat.format(calendar.getTime()));
 
                         txtDateDernierVisionnage.setText(dateValue);
+                        formation.setDateVisionnage(calendar.getTimeInMillis());
+
                     }
         };
 
         Calendar calendar = Calendar.getInstance();
-        if(formation.dateVisionnage>0)
-            calendar.setTimeInMillis(formation.dateVisionnage);
+
+        if(formation.getDateVisionnage()>0) {
+            calendar.setTimeInMillis(formation.getDateVisionnage());
+        }
 
         datePickerDialog =
                 new DatePickerDialog(getActivity(),onDateSetListener,
@@ -109,6 +121,5 @@ public class ViewFormationFragment extends Fragment
         datePickerDialog.show();
 
     }
-
 
 }
